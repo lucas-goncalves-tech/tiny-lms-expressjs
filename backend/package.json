@@ -10,8 +10,6 @@
     "start": "node dist/server.js",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "test": "vitest",
-    "coverage": "vitest run --coverage",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",

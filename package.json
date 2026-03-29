@@ -13,7 +13,6 @@
   "license": "ISC",
   "author": "Drummonds",
   "scripts": {
-    "test": "docker compose exec api npx vitest",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
     "docker:logs": "docker compose logs -f",
