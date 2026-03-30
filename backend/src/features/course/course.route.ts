@@ -1,10 +1,10 @@
-import { courseSlugParamsRequest } from "@lms/dtos";
 import { Router } from "express";
 import { DataBase } from "../../db";
 import { CourseController } from "./course.controller";
 import { CourseRepository } from "./course.repository";
 import { CourseService } from "./course.service";
 import { validateMiddleware } from "../../shared/middlewares/validate.middleware";
+import { courseSlugParamsRequest } from "./dtos/course-params";
 
 export class CourseRoutes {
   private readonly controller: CourseController;

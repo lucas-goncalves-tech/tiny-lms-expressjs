@@ -1,6 +1,6 @@
-import { findCourseResponse, findManyWithProgressResponse } from "@lms/dtos";
 import { notFoundResponse, unauthorizedResponse } from "../../doc/errors/errors";
 import { registry } from "../../doc/openapi.registry";
+import { findCourseResponse, findManyWithProgressResponse } from "./dtos/course.dto";
 
 registry.registerPath({
   path: "/courses",
