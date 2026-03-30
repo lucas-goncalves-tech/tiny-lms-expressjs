@@ -10,8 +10,12 @@
     "allowImportingTsExtensions": true,
     "rewriteRelativeImportExtensions": true,
     "outDir": "./dist",
-    "rootDir": "./src"
+    "baseUrl": ".",
+    "paths": {
+      "@lms/dtos": ["../packages/dtos/index.ts"],
+      "@lms/dtos/*": ["../packages/dtos/*"]
+    }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "../packages/dtos/**/*"],
   "exclude": ["node_modules/**/*", "dist/**/*"]
 }

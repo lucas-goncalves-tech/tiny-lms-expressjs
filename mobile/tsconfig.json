@@ -2,10 +2,11 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"],
+      "@lms/dtos": ["../packages/dtos/index.ts"],
+      "@lms/dtos/*": ["../packages/dtos/*"]
     }
   },
   "include": [
