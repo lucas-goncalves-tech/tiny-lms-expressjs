@@ -1,26 +1,33 @@
+import {
+  createCourseRequest,
+  updateCourseRequest,
+  createLessonRequest,
+  courseSlugParamsRequest,
+  userIdParamsSchema,
+  updateUserRequest,
+  adminCreateUserSchema,
+  lessonSlugParamsRequest,
+  updateLessonRequest,
+  userQueryRequest,
+} from "@lms/dtos";
 import { Router } from "express";
 import { DataBase } from "../../db";
 import { validateMiddleware } from "../../shared/middlewares/validate.middleware";
 import { adminGuardMiddleware } from "../../shared/middlewares/guard-role.middleware";
-import { createCourseSchema } from "./dto/create-course.dto";
-import { updateCourseSchema } from "./dto/update-course.dto";
+
 import { AdminController } from "./admin.controller";
 import { AdminService } from "./admin.service";
 import { CourseRepository } from "../course/course.repository";
-import { createLessonSchema } from "./dto/create-lesson.dto";
+
 import { LessonRepository } from "../lessons/lesson.repository";
-import { courseSlugParamsSchema } from "../course/dto/course-params";
+
 import { UserRepository } from "../user/user.repository";
-import { userIdParamsSchema } from "./dto/admin-params";
-import { updateUserSchema } from "./dto/update-user.dto";
-import { adminCreateUserSchema } from "./dto/admin-create-user.dto";
+
 import { CryptoService } from "../../shared/security/crypto-service.security";
 import { noCacheMiddleware } from "../../shared/middlewares/no-cache.middleware";
-import { lessonSlugParamsSchema } from "../course/dto/lesson-params";
+
 import { validateFileHeadersMiddleware } from "../../shared/middlewares/validate-file-headers.middleware";
 import { UploadService } from "../upload/upload.service";
-import { updateLessonSchema } from "./dto/update-lesson.dto";
-import { userQuerySchema } from "./dto/users-query.dto";
 
 export class AdminRoutes {
   private readonly controller: AdminController;
@@ -52,17 +59,17 @@ export class AdminRoutes {
     this.router.get("/courses", this.controller.findManyCourses);
     this.router.post(
       "/courses/new",
-      validateMiddleware({ body: createCourseSchema }),
+      validateMiddleware({ body: createCourseRequest }),
       this.controller.createCourse
     );
     this.router.put(
       "/courses/:courseSlug/update",
-      validateMiddleware({ params: courseSlugParamsSchema, body: updateCourseSchema }),
+      validateMiddleware({ params: courseSlugParamsRequest, body: updateCourseRequest }),
       this.controller.updateCourse
     );
     this.router.delete(
       "/courses/:courseSlug/delete",
-      validateMiddleware({ params: courseSlugParamsSchema }),
+      validateMiddleware({ params: courseSlugParamsRequest }),
       this.controller.deleteCourse
     );
 
@@ -70,7 +77,7 @@ export class AdminRoutes {
     this.router.get("/lessons/:courseSlug", this.controller.findManyLessons);
     this.router.post(
       "/lessons/:courseSlug/new",
-      validateMiddleware({ params: courseSlugParamsSchema, body: createLessonSchema }),
+      validateMiddleware({ params: courseSlugParamsRequest, body: createLessonRequest }),
       this.controller.createLesson
     );
     this.router.post(
@@ -80,24 +87,24 @@ export class AdminRoutes {
     );
     this.router.put(
       "/lessons/:courseSlug/:lessonSlug/update",
-      validateMiddleware({ params: lessonSlugParamsSchema, body: updateLessonSchema }),
+      validateMiddleware({ params: lessonSlugParamsRequest, body: updateLessonRequest }),
       this.controller.updateLesson
     );
     this.router.delete(
       "/lessons/:courseSlug/:lessonSlug/delete",
-      validateMiddleware({ params: lessonSlugParamsSchema }),
+      validateMiddleware({ params: lessonSlugParamsRequest }),
       this.controller.deleteLesson
     );
 
     // Users
     this.router.get(
       "/users",
-      validateMiddleware({ query: userQuerySchema }),
+      validateMiddleware({ query: userQueryRequest }),
       this.controller.findManyUsers
     );
     this.router.put(
       "/users/:userId/update",
-      validateMiddleware({ params: userIdParamsSchema, body: updateUserSchema }),
+      validateMiddleware({ params: userIdParamsSchema, body: updateUserRequest }),
       this.controller.updateUser
     );
     this.router.post(

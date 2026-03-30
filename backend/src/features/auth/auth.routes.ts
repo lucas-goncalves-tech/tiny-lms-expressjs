@@ -1,11 +1,11 @@
+import { createUserRequest, loginRequest } from "@lms/dtos";
 import { DataBase } from "../../db";
 import { AuthService } from "./auth.service";
 import { AuthController } from "./auth.controller";
 import { UserRepository } from "../user/user.repository";
 import { Router } from "express";
 import { validateMiddleware } from "../../shared/middlewares/validate.middleware";
-import { createUserDto } from "./dto/create-user.dto";
-import { loginUserDto } from "./dto/login-user.dto";
+
 import { SessionsRepository } from "../sessions/sessions.repository";
 import { CryptoService } from "../../shared/security/crypto-service.security";
 import { SessionsService } from "../sessions/sessions.service";
@@ -48,14 +48,14 @@ export class AuthRoutes {
     this.router.post(
       "/register",
       rateLimitMiddleware(this.ttl, 10),
-      validateMiddleware({ body: createUserDto }),
+      validateMiddleware({ body: createUserRequest }),
       this.controller.createUser
     );
     this.router.post(
       "/login",
       rateLimitMiddleware(this.ttl, 10),
       noCacheMiddleware,
-      validateMiddleware({ body: loginUserDto }),
+      validateMiddleware({ body: loginRequest }),
       this.controller.loginUser
     );
   }

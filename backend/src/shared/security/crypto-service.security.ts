@@ -47,8 +47,6 @@ export class CryptoService {
   private readonly ENCODE: BufferEncoding = "hex";
   private readonly ALGORITHM: Algorithm = "sha256";
 
-
-
   private parseHash(storedHash: string) {
     const [stored_salt_hex, stored_dk_hex] = storedHash.split(this.SCRYPT_CONFIG.separator);
     const stored_salt = Buffer.from(stored_salt_hex, this.ENCODE);

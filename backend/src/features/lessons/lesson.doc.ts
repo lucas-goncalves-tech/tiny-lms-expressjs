@@ -1,14 +1,14 @@
 import {
+  completeLessonResponse,
+  findLessonBySlugResponse,
+  findManyByCourseSlugResponse,
+} from "@lms/dtos";
+import {
   badRequestResponse,
   notFoundResponse,
   unauthorizedResponse,
 } from "../../doc/errors/errors";
 import { registry } from "../../doc/openapi.registry";
-import {
-  completeLessonResponse,
-  findLessonBySlugResponse,
-  findManyByCourseSlugResponse,
-} from "./dto/lesson.dto";
 
 registry.registerPath({
   path: "/lessons/{courseSlug}",

@@ -1,4 +1,18 @@
 import {
+  adminCreateUserSchema,
+  adminMessageResponse,
+  findManyCoursesReponse,
+  findManylessonsResponse,
+  findManyUsersResponse,
+  uploadVideoHeaders,
+  uploadVideoResponse,
+  createCourseRequest,
+  createLessonRequest,
+  updateCourseRequest,
+  updateLessonRequest,
+  updateUserRequest,
+} from "@lms/dtos";
+import {
   badRequestResponse,
   conflictResponse,
   forbiddenResponse,
@@ -6,20 +20,6 @@ import {
   unauthorizedResponse,
 } from "../../doc/errors/errors";
 import { registry } from "../../doc/openapi.registry";
-import { adminCreateUserSchema } from "./dto/admin-create-user.dto";
-import {
-  adminMessageResponse,
-  findManyCoursesReponse,
-  findManylessonsResponse,
-  findManyUsersResponse,
-  uploadVideoHeaders,
-  uploadVideoResponse,
-} from "./dto/admin.dto";
-import { createCourseSchema } from "./dto/create-course.dto";
-import { createLessonSchema } from "./dto/create-lesson.dto";
-import { updateCourseSchema } from "./dto/update-course.dto";
-import { updateLessonSchema } from "./dto/update-lesson.dto";
-import { updateUserSchema } from "./dto/update-user.dto";
 
 registry.registerPath({
   path: "/admin/courses",
@@ -51,7 +51,7 @@ registry.registerPath({
     body: {
       content: {
         "application/json": {
-          schema: createCourseSchema,
+          schema: createCourseRequest,
           example: {
             slug: "curso-de-typescript",
             title: "Curso de TypeScript",
@@ -86,7 +86,7 @@ registry.registerPath({
     body: {
       content: {
         "application/json": {
-          schema: updateCourseSchema,
+          schema: updateCourseRequest,
           example: {
             title: "Curso de TS",
             description: "Curso de TS avançado",
@@ -192,7 +192,7 @@ registry.registerPath({
     body: {
       content: {
         "application/json": {
-          schema: createLessonSchema,
+          schema: createLessonRequest,
           example: {
             title: "Aula 1",
             slug: "aula-1",
@@ -230,7 +230,7 @@ registry.registerPath({
     body: {
       content: {
         "application/json": {
-          schema: updateLessonSchema,
+          schema: updateLessonRequest,
           example: {
             title: "Aula 1",
             slug: "aula-1",
@@ -309,7 +309,7 @@ registry.registerPath({
     body: {
       content: {
         "application/json": {
-          schema: updateUserSchema,
+          schema: updateUserRequest,
           example: {
             name: "Usuario 1",
             role: "USER",

@@ -17,6 +17,6 @@ export class CertificatesService {
     if (!result) {
       throw new NotfoundError("Certificado nao encontrado");
     }
-    return result
+    return result;
   }
 }

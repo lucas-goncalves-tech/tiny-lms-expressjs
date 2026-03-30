@@ -1,3 +1,4 @@
+import { createUserResponse, createUserRequest, loginRequest } from "@lms/dtos";
 import {
   badRequestResponse,
   conflictResponse,
@@ -5,9 +6,6 @@ import {
   unauthorizedResponse,
 } from "../../doc/errors/errors";
 import { registry } from "../../doc/openapi.registry";
-import { createUserResponse } from "./dto/auth.dto";
-import { createUserDto } from "./dto/create-user.dto";
-import { loginUserDto } from "./dto/login-user.dto";
 
 registry.registerPath({
   path: "/auth/register",
@@ -18,7 +16,7 @@ registry.registerPath({
     body: {
       content: {
         "application/json": {
-          schema: createUserDto,
+          schema: createUserRequest,
           example: {
             name: "John Doe",
             email: "john.doe@example.com",
@@ -53,7 +51,7 @@ registry.registerPath({
     body: {
       content: {
         "application/json": {
-          schema: loginUserDto,
+          schema: loginRequest,
           example: {
             email: "john.doe@example.com",
             password: "password123",

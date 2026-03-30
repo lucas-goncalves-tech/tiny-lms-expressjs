@@ -70,9 +70,7 @@
       "indexes": {
         "users_email_unique": {
           "name": "users_email_unique",
-          "columns": [
-            "email"
-          ],
+          "columns": ["email"],
           "isUnique": true
         }
       },
@@ -133,9 +131,7 @@
       "indexes": {
         "courses_slug_unique": {
           "name": "courses_slug_unique",
-          "columns": [
-            "slug"
-          ],
+          "columns": ["slug"],
           "isUnique": true
         }
       },
@@ -215,18 +211,12 @@
       "indexes": {
         "unique_course_slug": {
           "name": "unique_course_slug",
-          "columns": [
-            "course_id",
-            "slug"
-          ],
+          "columns": ["course_id", "slug"],
           "isUnique": true
         },
         "idx_lessons_order": {
           "name": "idx_lessons_order",
-          "columns": [
-            "course_id",
-            "order"
-          ],
+          "columns": ["course_id", "order"],
           "isUnique": false
         }
       },
@@ -235,12 +225,8 @@
           "name": "lessons_course_id_courses_id_fk",
           "tableFrom": "lessons",
           "tableTo": "courses",
-          "columnsFrom": [
-            "course_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["course_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -288,12 +274,8 @@
           "name": "lessons_completed_user_id_users_id_fk",
           "tableFrom": "lessons_completed",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -301,12 +283,8 @@
           "name": "lessons_completed_course_id_courses_id_fk",
           "tableFrom": "lessons_completed",
           "tableTo": "courses",
-          "columnsFrom": [
-            "course_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["course_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -314,23 +292,15 @@
           "name": "lessons_completed_lesson_id_lessons_id_fk",
           "tableFrom": "lessons_completed",
           "tableTo": "lessons",
-          "columnsFrom": [
-            "lesson_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["lesson_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {
         "lessons_completed_user_id_course_id_lesson_id_pk": {
-          "columns": [
-            "user_id",
-            "course_id",
-            "lesson_id"
-          ],
+          "columns": ["user_id", "course_id", "lesson_id"],
           "name": "lessons_completed_user_id_course_id_lesson_id_pk"
         }
       },
@@ -373,10 +343,7 @@
       "indexes": {
         "unique_user_course": {
           "name": "unique_user_course",
-          "columns": [
-            "user_id",
-            "course_id"
-          ],
+          "columns": ["user_id", "course_id"],
           "isUnique": true
         }
       },
@@ -385,12 +352,8 @@
           "name": "certificates_user_id_users_id_fk",
           "tableFrom": "certificates",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -398,12 +361,8 @@
           "name": "certificates_course_id_courses_id_fk",
           "tableFrom": "certificates",
           "tableTo": "courses",
-          "columnsFrom": [
-            "course_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["course_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -473,12 +432,8 @@
           "name": "sessions_user_id_users_id_fk",
           "tableFrom": "sessions",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }

@@ -1,3 +1,4 @@
+import { updatePasswordRequest, updateEmailRequest } from "@lms/dtos";
 import { Router } from "express";
 import { UserController } from "./user.controller";
 import { DataBase } from "../../db";
@@ -8,9 +9,8 @@ import { SessionsService } from "../sessions/sessions.service";
 import { UserService } from "./user.service";
 import { noCacheMiddleware } from "../../shared/middlewares/no-cache.middleware";
 import { validateMiddleware } from "../../shared/middlewares/validate.middleware";
-import { updatePasswordDto } from "./dto/update-password.dto";
+
 import { rateLimitMiddleware } from "../../shared/middlewares/rate-limit.middleware";
-import { updateEmailDto } from "./dto/update-email.dto";
 
 export class UserRoutes {
   private readonly controller: UserController;
@@ -34,12 +34,12 @@ export class UserRoutes {
     this.router.use(noCacheMiddleware);
     this.router.put(
       "/password/update",
-      validateMiddleware({ body: updatePasswordDto }),
+      validateMiddleware({ body: updatePasswordRequest }),
       this.controller.updatePassword
     );
     this.router.put(
       "/email/update",
-      validateMiddleware({ body: updateEmailDto }),
+      validateMiddleware({ body: updateEmailRequest }),
       this.controller.updateEmail
     );
   }

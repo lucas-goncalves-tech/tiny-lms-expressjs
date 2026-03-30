@@ -1,11 +1,10 @@
+import { updateEmailRequest, updatePasswordRequest } from "@lms/dtos";
 import {
   badRequestResponse,
   conflictResponse,
   unauthorizedResponse,
 } from "../../doc/errors/errors";
 import { registry } from "../../doc/openapi.registry";
-import { updateEmailDto } from "./dto/update-email.dto";
-import { updatePasswordDto } from "./dto/update-password.dto";
 
 registry.registerPath({
   path: "/user/password/update",
@@ -17,7 +16,7 @@ registry.registerPath({
     body: {
       content: {
         "application/json": {
-          schema: updatePasswordDto,
+          schema: updatePasswordRequest,
           example: {
             currentPassword: "password123",
             newPassword: "newPassword123",
@@ -49,7 +48,7 @@ registry.registerPath({
     body: {
       content: {
         "application/json": {
-          schema: updateEmailDto,
+          schema: updateEmailRequest,
           example: {
             email: "john.doe2@example.com",
           },

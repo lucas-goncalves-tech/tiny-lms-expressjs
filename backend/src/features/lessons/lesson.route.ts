@@ -1,3 +1,8 @@
+import {
+  findLessonParamsRequest,
+  completeLessonParamsRequest,
+  courseSlugParamsRequest,
+} from "@lms/dtos";
 import { DataBase } from "../../db";
 import { LessonRepository } from "./lesson.repository";
 import { LessonService } from "./lesson.service";
@@ -6,9 +11,7 @@ import { CourseRepository } from "../course/course.repository";
 import { CertificateRepository } from "../certificates/certificate.repository";
 import { Router } from "express";
 import { validateMiddleware } from "../../shared/middlewares/validate.middleware";
-import { findLessonParamsSchema } from "./dto/lesson-params.dto";
-import { completeLessonParamsSchema } from "./dto/complete-lesson.dto";
-import { courseSlugParamsSchema } from "../course/dto/course-params";
+
 import { UploadService } from "../upload/upload.service";
 
 export class LessonRoutes {
@@ -29,30 +32,30 @@ export class LessonRoutes {
   private initRoutes() {
     this.router.get(
       "/",
-      validateMiddleware({ params: courseSlugParamsSchema }),
+      validateMiddleware({ params: courseSlugParamsRequest }),
       this.controller.findManyByCourseSlug
     );
 
     this.router.get(
       "/:lessonSlug/complete",
-      validateMiddleware({ params: completeLessonParamsSchema }),
+      validateMiddleware({ params: completeLessonParamsRequest }),
       this.controller.completeLesson
     );
 
     this.router.get(
       "/:lessonSlug",
-      validateMiddleware({ params: findLessonParamsSchema }),
+      validateMiddleware({ params: findLessonParamsRequest }),
       this.controller.findBySlug
     );
 
     this.router.get(
       "/:lessonSlug/video",
-      validateMiddleware({ params: findLessonParamsSchema }),
+      validateMiddleware({ params: findLessonParamsRequest }),
       this.controller.videoStreaming
     );
     this.router.delete(
       "/reset",
-      validateMiddleware({ params: courseSlugParamsSchema }),
+      validateMiddleware({ params: courseSlugParamsRequest }),
       this.controller.resetCourseCompleted
     );
   }

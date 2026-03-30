@@ -9,7 +9,7 @@ export class LessonService {
     private readonly lessonRepository: LessonRepository,
     private readonly courseRepository: CourseRepository,
     private readonly certificateRepository: CertificateRepository
-  ) { }
+  ) {}
 
   async findManyByCourseSlug(userId: string, courseSlug: string) {
     const course = await this.courseRepository.findBySlug(courseSlug);

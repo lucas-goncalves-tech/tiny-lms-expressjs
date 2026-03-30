@@ -48,19 +48,19 @@ export function generateCertificatePdf(certificate: ICertificateFull) {
   const cornerSize = 15;
   doc.setDrawColor(...primaryColor);
   doc.setLineWidth(1.5);
-  
+
   // Canto superior esquerdo
   doc.line(8, 23, 8 + cornerSize, 23);
   doc.line(23, 8, 23, 8 + cornerSize);
-  
+
   // Canto superior direito
   doc.line(pageWidth - 8 - cornerSize, 23, pageWidth - 8, 23);
   doc.line(pageWidth - 23, 8, pageWidth - 23, 8 + cornerSize);
-  
+
   // Canto inferior esquerdo
   doc.line(8, pageHeight - 23, 8 + cornerSize, pageHeight - 23);
   doc.line(23, pageHeight - 8 - cornerSize, 23, pageHeight - 8);
-  
+
   // Canto inferior direito
   doc.line(pageWidth - 8 - cornerSize, pageHeight - 23, pageWidth - 8, pageHeight - 23);
   doc.line(pageWidth - 23, pageHeight - 8 - cornerSize, pageWidth - 23, pageHeight - 8);
@@ -116,21 +116,23 @@ export function generateCertificatePdf(certificate: ICertificateFull) {
   // === DATA DE CONCLUSÃO ===
   doc.setTextColor(...darkText);
   doc.setFontSize(12);
-  doc.text(`Concluído em ${formatDate(certificate.completed)}`, pageWidth / 2, 155, { align: "center" });
+  doc.text(`Concluído em ${formatDate(certificate.completed)}`, pageWidth / 2, 155, {
+    align: "center",
+  });
 
   // === SELO DE AUTENTICIDADE ===
   const sealX = pageWidth - 55;
   const sealY = pageHeight - 45;
-  
+
   // Círculo externo
   doc.setDrawColor(...goldColor);
   doc.setLineWidth(2);
   doc.circle(sealX, sealY, 18);
-  
+
   // Círculo interno
   doc.setLineWidth(0.5);
   doc.circle(sealX, sealY, 14);
-  
+
   // Texto do selo
   doc.setTextColor(...goldColor);
   doc.setFontSize(6);

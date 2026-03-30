@@ -1,17 +1,16 @@
+import { CreateUserRequest, LoginRequest } from "@lms/dtos";
 import { ConflictError } from "../../shared/errors/conflict.error";
 import { ForbiddenError } from "../../shared/errors/forbidden.error";
 import { UnauthorizedError } from "../../shared/errors/unauthorized.error";
 import { CryptoService } from "../../shared/security/crypto-service.security";
 import { ICreateUserInput } from "../user/interface/user.interface";
 import { UserRepository } from "../user/user.repository";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { LoginUserDto } from "./dto/login-user.dto";
 
 export class AuthService {
   private readonly cryptoService = new CryptoService();
   constructor(private readonly userRepository: UserRepository) {}
 
-  async createUser(userData: CreateUserDto) {
+  async createUser(userData: CreateUserRequest) {
     const userExist = await this.userRepository.findByKey("email", userData.email);
     if (userExist) throw new ConflictError("Email já cadastrado");
 
@@ -26,7 +25,7 @@ export class AuthService {
     return result;
   }
 
-  async loginUser(userData: LoginUserDto) {
+  async loginUser(userData: LoginRequest) {
     const userExist = await this.userRepository.findByKey("email", userData.email);
     if (!userExist) throw new UnauthorizedError("Email ou senha inválidos");
     if (userExist.isActive === 0)

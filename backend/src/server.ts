@@ -4,7 +4,7 @@ import { envCheck } from "./shared/helper/env-check.helper.ts";
 class Server {
   private readonly PORT = envCheck().PORT;
   private readonly express = new App();
-  private server: ReturnType<typeof this.express.app.listen> | null = null
+  private server: ReturnType<typeof this.express.app.listen> | null = null;
   constructor() {
     this.init();
   }
@@ -12,11 +12,11 @@ class Server {
   public readonly shutdown = (signal: "SIGINT" | "SIGTERM") => {
     console.log(`\nReceived ${signal}, shutting down gracefully...`);
     this.server?.close(() => {
-      this.express.db.close()
-      process.exit(0)
-    })
-    this.server?.closeAllConnections()
-    setTimeout(()=> {
+      this.express.db.close();
+      process.exit(0);
+    });
+    this.server?.closeAllConnections();
+    setTimeout(() => {
       process.exit(1);
     }, 5_000).unref();
   };
@@ -29,5 +29,5 @@ class Server {
 }
 
 const server = new Server();
-process.once("SIGINT", server.shutdown)
-process.once("SIGTERM", server.shutdown)
+process.once("SIGINT", server.shutdown);
+process.once("SIGTERM", server.shutdown);

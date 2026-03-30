@@ -1,19 +1,24 @@
+import {
+  CreateLessonRequest,
+  UpdateCourseRequest,
+  AdminCreateUserDTO,
+  UpdateLessonRequest,
+  UserQueryRequest,
+} from "@lms/dtos";
 import { ConflictError } from "../../shared/errors/conflict.error";
 import { NotfoundError } from "../../shared/errors/not-found.error";
 import { CourseRepository } from "../course/course.repository";
 import { ICreateCourseInput } from "../course/interface/course.interface";
-import { CreateLessonDTO } from "./dto/create-lesson.dto";
+
 import { LessonRepository } from "../lessons/lesson.repository";
-import { UpdateCourseDTO } from "./dto/update-course.dto";
+
 import { UserRepository } from "../user/user.repository";
 import { IAdminCreateUserInput, IUpdateUserByAdminInput } from "../user/interface/user.interface";
-import { AdminCreateUserDTO } from "./dto/admin-create-user.dto";
+
 import { CryptoService } from "../../shared/security/crypto-service.security";
 import { UnprocessableEntityError } from "../../shared/errors/unprocessable-entity.error";
 import { UploadService } from "../upload/upload.service";
 import { BadRequestError } from "../../shared/errors/bad-request.error";
-import { UpdateLessonDTO } from "./dto/update-lesson.dto";
-import { UserQueryDTO } from "./dto/users-query.dto";
 
 export class AdminService {
   constructor(
@@ -22,7 +27,7 @@ export class AdminService {
     private readonly userRepository: UserRepository,
     private readonly cryptoService: CryptoService,
     private readonly uploadService: UploadService
-  ) { }
+  ) {}
 
   // Courses
   async createCourse(courseData: ICreateCourseInput) {
@@ -37,7 +42,7 @@ export class AdminService {
     return result;
   }
 
-  async updateCourse(courseSlug: string, courseData: UpdateCourseDTO) {
+  async updateCourse(courseSlug: string, courseData: UpdateCourseRequest) {
     const course = await this.courseRepository.findBySlug(courseSlug);
     if (!course) {
       throw new NotfoundError("Curso não encontrado");
@@ -62,7 +67,7 @@ export class AdminService {
     return result;
   }
 
-  async createLesson(courseSlug: string, lessonData: CreateLessonDTO) {
+  async createLesson(courseSlug: string, lessonData: CreateLessonRequest) {
     const course = await this.courseRepository.findBySlug(courseSlug);
     if (!course) {
       throw new NotfoundError("Curso não encontrado");
@@ -83,7 +88,7 @@ export class AdminService {
     return result;
   }
 
-  async updateLesson(courseSlug: string, lessonSlug: string, lessonData: UpdateLessonDTO) {
+  async updateLesson(courseSlug: string, lessonSlug: string, lessonData: UpdateLessonRequest) {
     const course = await this.courseRepository.findBySlug(courseSlug);
     if (!course) {
       throw new NotfoundError("Curso não encontrado");
@@ -126,10 +131,8 @@ export class AdminService {
     await this.uploadService.rm(lesson.video);
   }
 
-
-
   // Users
-  async findManyUsers(query: UserQueryDTO) {
+  async findManyUsers(query: UserQueryRequest) {
     const result = await this.userRepository.findMany(query.search, query.limit, query.page);
     return result;
   }

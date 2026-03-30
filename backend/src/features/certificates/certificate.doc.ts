@@ -1,6 +1,6 @@
+import { findManyCertificatesResponse } from "@lms/dtos";
 import { notFoundResponse, unauthorizedResponse } from "../../doc/errors/errors";
 import { registry } from "../../doc/openapi.registry";
-import { findManyCertificatesResponse } from "./dto/certificate.dto";
 
 registry.registerPath({
   path: "/certificates",

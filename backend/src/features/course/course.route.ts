@@ -1,10 +1,10 @@
+import { courseSlugParamsRequest } from "@lms/dtos";
 import { Router } from "express";
 import { DataBase } from "../../db";
 import { CourseController } from "./course.controller";
 import { CourseRepository } from "./course.repository";
 import { CourseService } from "./course.service";
 import { validateMiddleware } from "../../shared/middlewares/validate.middleware";
-import { courseSlugParamsSchema } from "./dto/course-params";
 
 export class CourseRoutes {
   private readonly controller: CourseController;
@@ -22,7 +22,7 @@ export class CourseRoutes {
     this.router.get("/", this.controller.findManyWithProgress);
     this.router.get(
       "/:courseSlug",
-      validateMiddleware({ params: courseSlugParamsSchema }),
+      validateMiddleware({ params: courseSlugParamsRequest }),
       this.controller.findOneBySlug
     );
   }

@@ -17,7 +17,7 @@ export class UploadService {
   private readonly ALLOWED_VIDEO_TYPES = ["video/mp4", "video/webm"];
   private readonly UPLOAD_DEST = envCheck().UPLOAD_DEST;
   private readonly TMP_UPLOAD_DEST = envCheck().TMP_UPLOAD_DEST;
-  constructor() { }
+  constructor() {}
 
   private async getDuration(filePath: string): Promise<number> {
     try {
@@ -76,7 +76,7 @@ export class UploadService {
       const seconds = await this.getDuration(finalPath);
       return { path: finalPath, seconds };
     } catch (error) {
-      await rm(tmpPath, { force: true }).catch(() => { });
+      await rm(tmpPath, { force: true }).catch(() => {});
       throw error;
     }
   }

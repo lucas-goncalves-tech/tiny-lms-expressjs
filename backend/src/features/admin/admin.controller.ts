@@ -1,19 +1,22 @@
+import {
+  CreateCourseRequest,
+  CreateLessonRequest,
+  UpdateCourseRequest,
+  UpdateUserRequest,
+  AdminCreateUserDTO,
+  UpdateLessonRequest,
+  UserQueryRequest,
+} from "@lms/dtos";
 import { Request, Response } from "express";
 import { AdminService } from "./admin.service";
-import { CreateCourseDTO } from "./dto/create-course.dto";
-import { CreateLessonDTO } from "./dto/create-lesson.dto";
-import { UpdateCourseDTO } from "./dto/update-course.dto";
-import { UpdateUserDTO } from "./dto/update-user.dto";
-import { AdminCreateUserDTO } from "./dto/admin-create-user.dto";
+
 import { UploadService } from "../upload/upload.service";
-import { UpdateLessonDTO } from "./dto/update-lesson.dto";
-import { UserQueryDTO } from "./dto/users-query.dto";
 
 export class AdminController {
   constructor(
     private readonly adminService: AdminService,
     private readonly uploadService: UploadService
-  ) { }
+  ) {}
 
   // Courses
   findManyCourses = async (_req: Request, res: Response) => {
@@ -22,7 +25,7 @@ export class AdminController {
   };
 
   createCourse = async (req: Request, res: Response) => {
-    const courseData = req.body as CreateCourseDTO;
+    const courseData = req.body as CreateCourseRequest;
     await this.adminService.createCourse(courseData);
 
     res.status(201).json({
@@ -32,7 +35,7 @@ export class AdminController {
 
   updateCourse = async (req: Request, res: Response) => {
     const { courseSlug } = req.params;
-    const courseData = req.body as UpdateCourseDTO;
+    const courseData = req.body as UpdateCourseRequest;
     await this.adminService.updateCourse(courseSlug, courseData);
 
     res.status(200).json({
@@ -55,7 +58,7 @@ export class AdminController {
   };
 
   createLesson = async (req: Request, res: Response) => {
-    const lessonData = req.body as CreateLessonDTO;
+    const lessonData = req.body as CreateLessonRequest;
     const { courseSlug } = req.params;
     const { title } = await this.adminService.createLesson(courseSlug, lessonData);
 
@@ -71,7 +74,7 @@ export class AdminController {
   };
 
   updateLesson = async (req: Request, res: Response) => {
-    const lessonData = req.body as UpdateLessonDTO;
+    const lessonData = req.body as UpdateLessonRequest;
     const { courseSlug, lessonSlug } = req.params;
     const { title } = await this.adminService.updateLesson(courseSlug, lessonSlug, lessonData);
 
@@ -87,10 +90,9 @@ export class AdminController {
     res.status(204).json();
   };
 
-
   // Users
   findManyUsers = async (req: Request, res: Response) => {
-    const { search, limit, page } = req.query as UserQueryDTO;
+    const { search, limit, page } = req.query as UserQueryRequest;
     const result = await this.adminService.findManyUsers({ search, limit, page });
     res.status(200).json(result);
   };
@@ -98,7 +100,7 @@ export class AdminController {
   updateUser = async (req: Request, res: Response) => {
     const { userId } = req.params;
     const adminId = req.session!.userId;
-    const userData = req.body as UpdateUserDTO;
+    const userData = req.body as UpdateUserRequest;
     await this.adminService.updateUser(adminId, userId, userData);
 
     res.status(200).json({
@@ -135,6 +137,4 @@ export class AdminController {
 
     res.status(204).json();
   };
-
-
 }

@@ -1,10 +1,11 @@
+import { certificateIdParamsRequest } from "@lms/dtos";
 import { DataBase } from "../../db";
 import { validateMiddleware } from "../../shared/middlewares/validate.middleware";
 import { CertificateRepository } from "./certificate.repository";
 import { CertificatesController } from "./certificate.controller";
 import { CertificatesService } from "./certificate.service";
 import { Router } from "express";
-import { certificateIdParamsDto } from "./dto/certificate-params.dto";
+
 import { ValidateSessionMiddleware } from "../../shared/middlewares/validate-session.middleware";
 import { SessionsService } from "../sessions/sessions.service";
 import { UserRepository } from "../user/user.repository";
@@ -36,7 +37,7 @@ export class CertificatesRoutes {
     );
     this.router.get(
       "/:certificateId",
-      validateMiddleware({ params: certificateIdParamsDto }),
+      validateMiddleware({ params: certificateIdParamsRequest }),
       this.controller.findCertificateById
     );
   }

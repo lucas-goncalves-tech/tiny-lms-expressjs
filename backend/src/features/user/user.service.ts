@@ -1,8 +1,9 @@
+import { UpdatePasswordRequest } from "@lms/dtos";
 import { ConflictError } from "../../shared/errors/conflict.error";
 import { UnauthorizedError } from "../../shared/errors/unauthorized.error";
 import { UnprocessableEntityError } from "../../shared/errors/unprocessable-entity.error";
 import { CryptoService } from "../../shared/security/crypto-service.security";
-import { UpdatePasswordDto } from "./dto/update-password.dto";
+
 import { UserRepository } from "./user.repository";
 
 export class UserService {
@@ -11,7 +12,7 @@ export class UserService {
     private readonly cryptoService: CryptoService
   ) {}
 
-  async updatePassword(userId: string, updatePasswordData: UpdatePasswordDto) {
+  async updatePassword(userId: string, updatePasswordData: UpdatePasswordRequest) {
     const userExist = await this.userRepository.findByKey("id", userId);
     if (!userExist) throw new UnauthorizedError("Sessão inválida");
 

@@ -1,7 +1,7 @@
+import { CreateUserRequest, LoginRequest } from "@lms/dtos";
 import { AuthService } from "./auth.service";
 import { Request, Response } from "express";
-import { CreateUserDto } from "./dto/create-user.dto";
-import { LoginUserDto } from "./dto/login-user.dto";
+
 import { SessionsService } from "../sessions/sessions.service";
 
 export class AuthController {
@@ -14,7 +14,7 @@ export class AuthController {
   }
 
   createUser = async (req: Request, res: Response) => {
-    const userData = req.body as CreateUserDto;
+    const userData = req.body as CreateUserRequest;
     await this.authService.createUser(userData);
     res.status(201).json({
       message: "usuário criado com sucesso!",
@@ -22,14 +22,14 @@ export class AuthController {
   };
 
   loginUser = async (req: Request, res: Response) => {
-    const userData = req.body as LoginUserDto;
+    const userData = req.body as LoginRequest;
     const userId = await this.authService.loginUser(userData);
     const sid = await this.sessionsService.createSession({
       userId,
       userAgent: req.headers["user-agent"] || "",
       ip: req.ip || "127.0.0.1",
     });
-    
+
     res.status(200).json({ token: sid });
   };
 
