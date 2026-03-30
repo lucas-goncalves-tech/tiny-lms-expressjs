@@ -1,13 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import { SessionsService } from "../../features/sessions/sessions.service";
 import { UnauthorizedError } from "../errors/unauthorized.error";
-import { SID_IDENTIFIER, sidCookieOptions } from "../constants/sid-identifier.constants";
 
 export class ValidateSessionMiddleware {
   constructor(private readonly sessionsService: SessionsService) {}
 
   validateSession = async (req: Request, res: Response, next: NextFunction) => {
-    const sid = req.cookies[SID_IDENTIFIER];
+    const authHeader = req.headers.authorization;
+    const sid = authHeader && authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : null;
+    
     if (!sid) throw new UnauthorizedError("Sessão inválida");
     try {
       const session = await this.sessionsService.validateSession(sid);
@@ -17,8 +18,10 @@ export class ValidateSessionMiddleware {
         name: session.user.name,
         email: session.user.email,
       };
+      
       if (session.renewed) {
-        res.cookie(SID_IDENTIFIER, sid, sidCookieOptions(session.expires_ms));
+        res.setHeader("Authorization", `Bearer ${sid}`);
+        res.setHeader("Access-Control-Expose-Headers", "Authorization");
       }
       next();
     } catch (err) {

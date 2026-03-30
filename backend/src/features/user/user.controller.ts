@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { UpdatePasswordDto } from "./dto/update-password.dto";
 import { UserService } from "./user.service";
 import { SessionsService } from "../sessions/sessions.service";
-import { SID_IDENTIFIER, sidCookieOptions } from "../../shared/constants/sid-identifier.constants";
 import { UpdateEmailDTO } from "./dto/update-email.dto";
 
 export class UserController {
@@ -24,8 +23,8 @@ export class UserController {
       userAgent: req.headers["user-agent"] || "",
       ip: req.ip || "127.0.0.1",
     });
-    res.cookie(SID_IDENTIFIER, sid, sidCookieOptions(this.ttl));
-    res.status(204).end();
+    
+    res.status(200).json({ token: sid });
   };
 
   updateEmail = async (req: Request, res: Response) => {

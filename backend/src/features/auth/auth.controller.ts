@@ -3,7 +3,6 @@ import { Request, Response } from "express";
 import { CreateUserDto } from "./dto/create-user.dto";
 import { LoginUserDto } from "./dto/login-user.dto";
 import { SessionsService } from "../sessions/sessions.service";
-import { SID_IDENTIFIER, sidCookieOptions } from "../../shared/constants/sid-identifier.constants";
 
 export class AuthController {
   private readonly ttl: number;
@@ -30,15 +29,17 @@ export class AuthController {
       userAgent: req.headers["user-agent"] || "",
       ip: req.ip || "127.0.0.1",
     });
-    res.cookie(SID_IDENTIFIER, sid, sidCookieOptions(this.ttl));
-    res.status(204).end();
+    
+    res.status(200).json({ token: sid });
   };
 
   logoutUser = async (req: Request, res: Response) => {
-    const sid = req.cookies[SID_IDENTIFIER]!;
-    res.clearCookie(SID_IDENTIFIER, sidCookieOptions());
+    const authHeader = req.headers.authorization;
+    const sid = authHeader && authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : null;
 
-    await this.sessionsService.revokeSession(sid);
+    if (sid) {
+      await this.sessionsService.revokeSession(sid);
+    }
 
     res.status(204).end();
   };
