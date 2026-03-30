@@ -1,29 +1,62 @@
 {
-  "name": "lms-fullstack",
+  "name": "tiny-lms-express",
   "version": "1.0.0",
-  "description": "Tiny lms",
-  "keywords": [
-    "fullstack",
-    "express",
-    "expo",
-    "react-native"
-  ],
-  "homepage": "https://github.com/lucas-goncalves-tech/lms-fullstack#readme",
-  "bugs": {
-    "url": "https://github.com/lucas-goncalves-tech/lms-fullstack/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lucas-goncalves-tech/lms-fullstack.git"
-  },
-  "license": "MIT",
-  "author": "Drummonds",
+  "description": "",
+  "main": "src/index.ts",
   "type": "commonjs",
   "scripts": {
-    "android": "cd mobile && npm run android",
-    "ios": "cd mobile && npm run ios",
-    "dev:backend": "cd backend && npm run dev",
-    "dev:mobile": "cd mobile && npm run dev",
-    "dev": "npm run dev:backend & npm run dev:mobile"
+    "dev": "tsx --watch --env-file=.env src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "db:seed": "tsx --env-file=.env src/db/seed.ts",
+    "db:all": "drizzle-kit generate && drizzle-kit migrate && tsx --env-file=.env src/db/seed.ts"
+  },
+  "keywords": [
+    "backend",
+    "tiny lms",
+    "express"
+  ],
+  "author": "Drummonds",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/node": "^24.10.1",
+    "@typescript-eslint/eslint-plugin": "^8.47.0",
+    "@typescript-eslint/parser": "^8.47.0",
+    "drizzle-kit": "^0.31.9",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.5.0",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.6",
+    "typescript": "^5.0.0",
+    "typescript-eslint": "^8.47.0"
+  },
+  "dependencies": {
+    "@asteasolutions/zod-to-openapi": "^8.4.1",
+    "@ffprobe-installer/ffprobe": "^2.1.2",
+    "@scalar/express-api-reference": "^0.8.40",
+    "better-sqlite3": "^12.4.1",
+    "chalk": "^5.6.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.44.7",
+    "express": "^5.1.0",
+    "file-type": "^21.1.1",
+    "helmet": "^8.1.0",
+    "jspdf": "^4.2.0",
+    "zod": "^4.1.12"
   }
 }
