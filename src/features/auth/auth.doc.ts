@@ -8,6 +8,7 @@ import { registry } from "../../doc/openapi.registry";
 import { createUserRequest } from "./dtos/create-user.request";
 import { createUserResponse } from "./dtos/create-user.response";
 import { loginRequest } from "./dtos/login.request";
+import { loginResponse } from "./dtos/login.response";
 
 registry.registerPath({
   path: "/auth/register",
@@ -63,8 +64,13 @@ registry.registerPath({
     },
   },
   responses: {
-    204: {
+    200: {
       description: "Login realizado com sucesso!",
+      content: {
+        "application/json": {
+          schema: loginResponse,
+        },
+      },
     },
     ...badRequestResponse,
     ...unauthorizedResponse,
