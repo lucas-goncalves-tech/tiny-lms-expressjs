@@ -1,13 +1,13 @@
 import z from "zod";
 
 export const findCourseResponse = z.object({
-  id: z.string().nullable(),
-  slug: z.string().nullable(),
-  title: z.string().nullable(),
-  description: z.string().nullable(),
-  created: z.string().nullable(),
-  totalSeconds: z.number().nullable(),
-  totalLessons: z.number().nullable(),
+  id: z.string(),
+  slug: z.string(),
+  title: z.string(),
+  description: z.string(),
+  created: z.string(),
+  totalSeconds: z.number(),
+  totalLessons: z.number(),
 });
 
 export const findManyWithProgressResponse = z.array(
