@@ -7,7 +7,11 @@ export class ValidateSessionMiddleware {
 
   validateSession = async (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
-    const sid = authHeader && authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : null;
+    let sid = authHeader && authHeader.startsWith("Bearer ") ? authHeader.split(" ")[1] : null;
+
+    if (!sid && req.query.token) {
+      sid = req.query.token as string;
+    }
 
     if (!sid) throw new UnauthorizedError("Sessão inválida");
     try {
