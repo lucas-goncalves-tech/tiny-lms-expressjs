@@ -124,10 +124,10 @@ export class AdminController {
 
     const result = await this.adminService.toggleUserStatus(adminId, userId);
 
+    const isActive = result.isActive ? "ativado" : "desativado";
+
     res.status(200).json({
-      message: result.isActive
-        ? `Usuário ${result.name} ativado com sucesso!`
-        : `Usuário ${result.name} desativado com sucesso!`,
+      message: `Usuário ${result.name} ${isActive} com sucesso!`,
     });
   };
 
