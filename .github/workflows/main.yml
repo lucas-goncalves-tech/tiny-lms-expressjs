@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 jobs:
-  backend:
-    name: Backend Lint & Build
+  lint-build:
+    name: Lint & Build
     runs-on: ubuntu-latest
 
     steps:
@@ -20,16 +20,13 @@ jobs:
         with:
           node-version: 24
           cache: npm
-          cache-dependency-path: backend/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm ci
-        working-directory: backend
 
       - name: Lint
         run: npm run lint:fix
-        working-directory: backend
 
       - name: Build
         run: npm run build
-        working-directory: backend
