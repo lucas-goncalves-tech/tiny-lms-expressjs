@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { CourseService } from "./course.service";
+import { CourseSlugParamsRequest } from "./dtos/course-params";
 
 export class CourseController {
   constructor(private readonly courseService: CourseService) {}
@@ -11,8 +12,9 @@ export class CourseController {
   };
 
   findOneBySlug = async (req: Request, res: Response) => {
-    const { courseSlug } = req.params;
+    const { courseSlug } = req.params as CourseSlugParamsRequest;
     const result = await this.courseService.findOneBySlug(courseSlug);
     res.json(result);
   };
 }
+

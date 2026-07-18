@@ -1,6 +1,7 @@
 import { generateCertificatePdf } from "../../shared/utils/generateCertificatePdf";
 import { CertificatesService } from "./certificate.service";
 import { Request, Response } from "express";
+import { CertificateIdParamsRequest } from "./dtos/certificate-params.dto";
 
 export class CertificatesController {
   constructor(private readonly certificatesService: CertificatesService) {}
@@ -12,8 +13,9 @@ export class CertificatesController {
   };
 
   findCertificateById = async (req: Request, res: Response) => {
-    const certificateId = req.params.certificateId;
+    const { certificateId } = req.params as CertificateIdParamsRequest;
     const certificate = await this.certificatesService.findCertificateById(certificateId);
+
     const pdf = generateCertificatePdf(certificate);
 
     res.setHeader("Content-Type", "application/pdf");

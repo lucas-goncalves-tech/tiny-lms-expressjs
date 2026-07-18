@@ -4,3 +4,6 @@ import { zodSlugValidator } from "../../../shared/validators/common-fields.valid
 export const courseSlugParamsRequest = z.object({
   courseSlug: zodSlugValidator("courseSlug"),
 });
+
+export type CourseSlugParamsRequest = z.infer<typeof courseSlugParamsRequest>;
+

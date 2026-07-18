@@ -9,6 +9,9 @@ import { UpdateLessonRequest } from "./dtos/lessons/update-lesson.request";
 import { AdminCreateUserRequest } from "./dtos/users/create-user.request";
 import { UpdateUserRequest } from "./dtos/users/update-user.request";
 import { UserQueryRequest } from "./dtos/users/users-query.request";
+import { CourseSlugParamsRequest } from "../course/dtos/course-params";
+import { LessonSlugParamsRequest } from "../course/dtos/lesson-params";
+import { UserIdParamsSchema } from "./dtos/common/admin.params";
 
 export class AdminController {
   constructor(
@@ -32,7 +35,7 @@ export class AdminController {
   };
 
   updateCourse = async (req: Request, res: Response) => {
-    const { courseSlug } = req.params;
+    const { courseSlug } = req.params as CourseSlugParamsRequest;
     const courseData = req.body as UpdateCourseRequest;
     await this.adminService.updateCourse(courseSlug, courseData);
 
@@ -42,7 +45,7 @@ export class AdminController {
   };
 
   deleteCourse = async (req: Request, res: Response) => {
-    const { courseSlug } = req.params;
+    const { courseSlug } = req.params as CourseSlugParamsRequest;
     await this.adminService.deleteCourse(courseSlug);
 
     res.status(204).json();
@@ -50,14 +53,14 @@ export class AdminController {
 
   // Lessons
   findManyLessons = async (req: Request, res: Response) => {
-    const { courseSlug } = req.params;
+    const { courseSlug } = req.params as CourseSlugParamsRequest;
     const result = await this.adminService.findManyLessons(courseSlug);
     res.status(200).json(result);
   };
 
   createLesson = async (req: Request, res: Response) => {
     const lessonData = req.body as CreateLessonRequest;
-    const { courseSlug } = req.params;
+    const { courseSlug } = req.params as CourseSlugParamsRequest;
     const { title } = await this.adminService.createLesson(courseSlug, lessonData);
 
     res.status(201).json({
@@ -73,7 +76,7 @@ export class AdminController {
 
   updateLesson = async (req: Request, res: Response) => {
     const lessonData = req.body as UpdateLessonRequest;
-    const { courseSlug, lessonSlug } = req.params;
+    const { courseSlug, lessonSlug } = req.params as LessonSlugParamsRequest;
     const { title } = await this.adminService.updateLesson(courseSlug, lessonSlug, lessonData);
 
     res.status(201).json({
@@ -82,7 +85,7 @@ export class AdminController {
   };
 
   deleteLesson = async (req: Request, res: Response) => {
-    const { courseSlug, lessonSlug } = req.params;
+    const { courseSlug, lessonSlug } = req.params as LessonSlugParamsRequest;
     await this.adminService.deleteLesson(courseSlug, lessonSlug);
 
     res.status(204).json();
@@ -96,7 +99,7 @@ export class AdminController {
   };
 
   updateUser = async (req: Request, res: Response) => {
-    const { userId } = req.params;
+    const { userId } = req.params as UserIdParamsSchema;
     const adminId = req.session!.userId;
     const userData = req.body as UpdateUserRequest;
     await this.adminService.updateUser(adminId, userId, userData);
@@ -116,7 +119,7 @@ export class AdminController {
   };
 
   toggleUserStatus = async (req: Request, res: Response) => {
-    const { userId } = req.params;
+    const { userId } = req.params as UserIdParamsSchema;
     const adminId = req.session!.userId;
 
     const result = await this.adminService.toggleUserStatus(adminId, userId);
@@ -129,7 +132,7 @@ export class AdminController {
   };
 
   deleteUser = async (req: Request, res: Response) => {
-    const { userId } = req.params;
+    const { userId } = req.params as UserIdParamsSchema;
     const adminId = req.session!.userId;
     await this.adminService.deleteUser(adminId, userId);
 
